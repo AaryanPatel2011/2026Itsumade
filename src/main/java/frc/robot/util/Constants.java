@@ -8,6 +8,31 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
+
+    public static class HubAlignConstants {
+        // TO BE TUNED
+        public static final double kRotationalP = 0.1;
+        public static final double kRotationalI = 0;
+        public static final double kRotationalD = 0;
+        public static final double kRotationalLowerP = 0.06;
+        public static final double kRotationalErrorThreshold = 0.3;
+        public static final double kRotationalLowerPThreshold = 1.5;
+        public static final double kRotationalFF = 0;
+
+        public static final double kLateralP = 0;
+        public static final double kLateralI = 0;
+        public static final double kLateralD = 0;
+        public static final double kLateralFF = 0;
+        public static final double kLateralErrorThreshold = 0;
+
+        public static final double kDepthP = 0;
+        public static final double kDepthI = 0;
+        public static final double kDepthD = 0;
+        public static final double kDepthFF = 0;
+        public static final double kDepthErrorThreshold = 0;
+    }
+
+
     public static final class AlignmentConstants {
         public static final Map<Integer, Double> kReefDesiredAngle = new HashMap<>() {
             {

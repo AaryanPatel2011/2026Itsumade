@@ -3,9 +3,11 @@ package frc.robot.util;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AlignToHubBasisVectorWithTranslation;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.Constants.DriveConstants;
 
@@ -18,7 +20,7 @@ public class OI {
             instance = new OI();
         return instance;
     }
-    
+
     public OI() {
         controller = new PS4Controller(0);
         configurate();
@@ -26,9 +28,10 @@ public class OI {
 
     public void configurate() {
         Trigger PSButton = new JoystickButton(controller, PS4Controller.Button.kPS.value);
-        PSButton.onTrue(new InstantCommand(() -> Drivetrain.getInstance().resetGyro()));    
-        
+        PSButton.onTrue(new InstantCommand(() -> Drivetrain.getInstance().resetGyro()));
+
         Trigger SquareButton = new JoystickButton(controller, PS4Controller.Button.kSquare.value);
+        SquareButton.whileTrue(AlignToHubBasisVectorWithTranslation());
 
         Trigger xButton = new JoystickButton(controller, PS4Controller.Button.kCross.value);
 
@@ -36,25 +39,29 @@ public class OI {
 
         Trigger muteButton = new JoystickButton(controller, 15);
     }
-    
+
+    private Command AlignToHubBasisVectorWithTranslation() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'AlignToHubBasisVectorWithTranslation'");
+    }
+
     public double getForward() {
         // return -controller.getLeftY();
         double val = -controller.getRawAxis(PS4Controller.Axis.kLeftY.value);
         return Math.abs(val) < 0.1 ? 0 : val;
     }
-    
+
     public double getStrafe() {
         double val = -controller.getRawAxis(PS4Controller.Axis.kLeftX.value);
         return Math.abs(val) < 0.1 ? 0 : val;
     }
-    
+
     public Translation2d getSwerveTranslation() {
         return new Translation2d(
-            getForward() * DriveConstants.kMaxFloorSpeed,
-            getStrafe() * DriveConstants.kMaxFloorSpeed
-        );
+                getForward() * DriveConstants.kMaxFloorSpeed,
+                getStrafe() * DriveConstants.kMaxFloorSpeed);
     }
-    
+
     public double getRotation() {
         double leftRotation = controller.getRawAxis(PS4Controller.Axis.kR2.value);
         double rightRotation = controller.getRawAxis(PS4Controller.Axis.kL2.value);
